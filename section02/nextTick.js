@@ -23,12 +23,12 @@
 //   console.log("promise2");
 // });
 setImmediate(() => {
-  console.log("immediate");
+  let winner;
+  console.log("in poll phase, the winner is");
+  queueMicrotask(() => {
+    if (!winner) console.log((winner = "microtask"));
+  });
+  process.nextTick(() => {
+    if (!winner) console.log((winner = "nextTick"));
+  });
 });
-process.nextTick(() => {
-  console.log("nextTick");
-});
-setTimeout(() => {
-  console.log("timeout");
-}, 0);
-Promise.resolve().then(() => console.log("promise"));
