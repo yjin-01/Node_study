@@ -23,8 +23,8 @@ class Hashtag extends Sequelize.Model {
     );
   }
 
-  static assocaite(db) {
-    db.Hashtag.belongToMany(db.Post, { through: "PostHashtag" }); // db.sequelize.models.Posthashtag로 직접 접근 가능
+  static associate(db) {
+    db.Hashtag.belongsToMany(db.Post, { through: "PostHashtags" }); // db.sequelize.models.Posthashtag로 직접 접근 가능
   }
 }
 

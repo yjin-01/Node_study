@@ -17,7 +17,7 @@ router.post("/logout", isLoggedIn, logout);
 // GET /auth/kakao
 router.get("/kakao", passport.authenticate("kakao")); // 카카오톡 로그인 화면으로 redirect
 
-// auth/kakao ->  카카오톡 로그린 화면 -> /auth/kakao/callback
+// auth/kakao ->  카카오톡 로그인 화면 -> /auth/kakao/callback
 
 // GET /auth/kakao/callback
 router.get(

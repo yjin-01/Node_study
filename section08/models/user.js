@@ -45,17 +45,17 @@ class User extends Sequelize.Model {
     );
   }
 
-  static assocaite(db) {
+  static associate(db) {
     db.User.hasMany(db.Post);
     db.User.belongsToMany(db.User, {
       // 팔로워(팔로잉의 아이디로 팔로우한 사람 찾기)
-      foreignkey: "followingId",
+      foreignKey: "followingId",
       as: "Followers",
       through: "Follow",
     });
     db.User.belongsToMany(db.User, {
       // 팔로잉(내 아이디로 내가 팔로잉하는 사람 찾기)
-      foreignkey: "followerId",
+      foreignKey: "followerId",
       as: "Followings",
       through: "Follow",
     });

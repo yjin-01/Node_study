@@ -12,6 +12,9 @@ const passportConfig = require("./passport");
 dotenv.config(); // process.env
 const pageRouter = require("./routes/page");
 const authRouter = require("./routes/auth");
+const postRouter = require("./routes/post");
+const userRouter = require("./routes/user");
+
 const app = express();
 passportConfig();
 app.set("port", process.env.PORT || 3000);
@@ -29,7 +32,8 @@ sequelize
   });
 
 app.use(morgan("dev")); // 서버 로깅
-app.use(express.static(path.join(__dirname, "public"))); // 프론트에서 접근가능하도록 허영
+app.use(express.static(path.join(__dirname, "public"))); // 프론트에서 접근가능하도록 허용
+app.use("/img", express.static(path.join(__dirname, "uploads")));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -50,6 +54,8 @@ app.use(passport.initialize()); // 연결 시 req.user, req.login, req.isAuthent
 app.use(passport.session()); // connect.sid 라는 이름으로 세션 쿠키가 브라우저로 전송 (쿠키 로그인을 도와주는 역할)
 app.use("/", pageRouter);
 app.use("/auth", authRouter);
+app.use("/post", postRouter);
+app.use("/user", userRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`);

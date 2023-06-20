@@ -12,10 +12,24 @@ module.exports = () => {
   });
 
   // 세션쿠키: 유저 아이디 => 메모리에 저장됨
-
+  // req.user를 생성하는 곳
   passport.deserializeUser((id, done) => {
-    User.findOne({ where: { id } })
-      .then((user) => done(null, user))
+    User.findOne({
+      where: { id },
+      include: [
+        {
+          model: User,
+          attributes: ["id", "nick"],
+          as: "Followers",
+        }, // 팔로잉
+        {
+          model: User,
+          attributes: ["id", "nick"],
+          as: "Followings",
+        }, // 팔로워
+      ],
+    })
+      .then((user) => done(null, user)) // req.user
       .catch((err) => done(err));
   });
   // 로컬스트레티지 등록
