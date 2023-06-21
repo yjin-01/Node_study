@@ -26,4 +26,5 @@ router.get("/join", isNotLoggedIn, renderJoin);
 router.get("/", renderMain);
 
 router.get("/hashtag", renderHashtag); //hashtag?hashtag=고양이
+
 module.exports = router;
