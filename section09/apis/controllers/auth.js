@@ -33,16 +33,18 @@ exports.login = (req, res, next) => {
     "local",
     // strategy에서 done이 실행되는 순간 이 로직이 실행됨!!
     (authError, user, info) => {
+      // 서버 에러 시
       if (authError) {
         console.log(error);
         return next(authError);
       }
 
+      // 로그인 실패 시
       if (!user) {
         return res.redirect(`/?error=${info.message}`);
       }
-      // 로그인 성공
-      console.log("!!!!");
+
+      // 로그인 성공 시
       return req.login(user, (loginError) => {
         console.log("=====");
         if (loginError) {

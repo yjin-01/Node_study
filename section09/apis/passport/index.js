@@ -7,7 +7,6 @@ module.exports = () => {
   console.log("ssss");
   // req.login시 실행
   passport.serializeUser((user, done) => {
-    console.log("?????");
     done(null, user.id); // user id 추출
   });
 
