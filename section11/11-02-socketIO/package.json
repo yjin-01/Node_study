@@ -1,0 +1,23 @@
+{
+  "name": "section11",
+  "version": "0.0.1",
+  "main": "app.js",
+  "license": "MIT",
+  "scripts": {
+    "start": "nodemon app"
+  },
+  "dependencies": {
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "morgan": "^1.10.0",
+    "nunjucks": "^3.2.4",
+    "passport": "^0.6.0",
+    "socket.io": "^4.7.0",
+    "ws": "^8.13.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.22"
+  }
+}
