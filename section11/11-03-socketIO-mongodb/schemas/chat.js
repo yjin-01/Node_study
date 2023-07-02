@@ -1,10 +1,13 @@
 const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
+const {
+  Types: { ObjectId },
+} = Schema;
 
-const chatSechema = new Schema({
+const chatSchema = new Schema({
   room: {
-    type: objectId,
+    type: ObjectId,
     require: true,
     ref: "Room",
   },
@@ -19,4 +22,4 @@ const chatSechema = new Schema({
   },
 });
 
-module.exports = roomSechema;
+module.exports = mongoose.model("Chat", chatSchema);

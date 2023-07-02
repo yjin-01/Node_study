@@ -39,7 +39,7 @@
   // 연결
   // 웹소켓의 한계 : 네임스페이스내에서만 실시간 통신 (데이터의 전달 범위 컨트롤 가능)
   // 네임스페이스 :room
-  const socket = io.connect("http://localhost:8005/room", {
+  const socket = io.connect("http://localhost:3000/room", {
     path: "/socket.io",
   });
 

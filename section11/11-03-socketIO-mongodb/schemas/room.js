@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const { Schema } = mongoose;
 
-const roomSechema = new Schema({
+const roomSchema = new Schema({
   title: {
     type: String,
     require: true,
@@ -27,4 +27,4 @@ const roomSechema = new Schema({
   },
 });
 
-module.exports = roomSechema;
+module.exports = mongoose.model("Room", roomSchema);

@@ -7,7 +7,7 @@ const nunjucks = require("nunjucks");
 const dotenv = require("dotenv");
 const passport = require("passport");
 const connect = require("./schemas");
-const ColorHash = require("color-hash").defalut;
+const ColorHash = require("color-hash").default;
 dotenv.config(); // process.env
 
 const websocket = require("./socket");
@@ -22,21 +22,22 @@ nunjucks.configure("views", { express: app, watch: true });
 // db연결
 connect();
 app.use(morgan("dev")); // 서버 로깅
-
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/gif", express.static(path.join(__dirname, "uploads")));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET)); // { connect.sid : 123413432 }
-app.use(
-  session({
-    resave: false,
-    saveUninitialized: false,
-    secret: process.env.COOKIE_SECRET,
-    cookie: {
-      httpOnly: true,
-      secure: false, // 개발 단계에서는 false
-    },
-  })
-);
+const sessionMiddleware = session({
+  resave: false,
+  saveUninitialized: false,
+  secret: process.env.COOKIE_SECRET,
+  cookie: {
+    httpOnly: true,
+    secure: false, // 개발 단계에서는 false
+  },
+});
+
+app.use(sessionMiddleware);
 app.use((req, res, next) => {
   if (!req.session.color) {
     const colorHash = new ColorHash();
@@ -55,7 +56,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  res.locals.message = err.message;
+  res.locals.message = err.message; // 요청에 저장하는 것은 res.locals사용
   res.locals.error = process.env.Node_ENV !== "production" ? err : {}; // 실제 배포된 후에는 에러 로그를 서비스에게 넘김
   res.status(err.status || 500);
   console.log(err);
@@ -66,4 +67,4 @@ const server = app.listen(app.get("port"), () => {
   console.log(app.get("port"), " 번 포트 실행중 🚀🚀🚀");
 }); // express
 
-websocket(server, app); // session에 컬러 저장해서 socket에서 사용할 수 있도록
+websocket(server, app, sessionMiddleware); // session에 컬러 저장해서 socket에서 사용할 수 있도록
